@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "*.tcc": "c",
+        "memory_resource": "c",
+        "sstream": "c",
+        "string": "c"
+    }
+}
