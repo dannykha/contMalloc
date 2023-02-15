@@ -286,13 +286,7 @@ int main() {
                 string = strtok(NULL, " ");
             }
             allocate(name, size, algo);
-        } 
-        else if (strcmp(string, "R") == 0) {
-            char name[MAXCMDS];
-            string = strtok(NULL, " ");
-            strcpy(name, string);
-            readFile(name);
-        } 
+        }
         else if (strcmp(string, "F") == 0) {
             char name[MAXCMDS];
             int index = 0;
@@ -304,9 +298,15 @@ int main() {
                 string = strtok(NULL, " ");
             }
             freeSpace(name);
-        } 
+        }  
         else if (strcmp(string, "S") == 0) {
             showMem(mem);
+        } 
+        else if (strcmp(string, "R") == 0) {
+            char name[MAXCMDS];
+            string = strtok(NULL, " ");
+            strcpy(name, string);
+            readFile(name);
         } 
         else if (strcmp(string, "C") == 0) {
             compact();
