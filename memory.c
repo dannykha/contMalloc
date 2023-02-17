@@ -60,6 +60,8 @@ void allocFirst(char name[MAXCMDS], int size) {
 void allocBest(char name[MAXCMDS], int size) {
     int currStart = -1;
     int bestIndex = -1;
+    int currSize = 0;
+    int holeSize = 0;
     int bestSize = __INT32_MAX__;
     for (int i = 0; i < MEMSIZE; ++i) {
         if (mem[i] == EMPTY) {
@@ -71,10 +73,10 @@ void allocBest(char name[MAXCMDS], int size) {
         else {
             // found end of empty space prior to allocation
             if (currStart != -1) {
-                int hole_size = i - currStart;
-                if (hole_size >= size && hole_size < bestSize) {
+                holeSize = i - currStart;
+                if (holeSize >= size && holeSize < bestSize) {
                     bestIndex = currStart;
-                    bestSize = hole_size;
+                    bestSize = holeSize;
                 }
                 currStart = -1;
             }
@@ -82,10 +84,10 @@ void allocBest(char name[MAXCMDS], int size) {
     }
     // memory case
     if (currStart != -1) {
-        int hole_size = MEMSIZE - currStart;
-        if (hole_size >= size && hole_size < bestSize) {
+        currSize = MEMSIZE - currStart;
+        if (currSize >= size && currSize < bestSize) {
             bestIndex = currStart;
-            bestSize = hole_size;
+            bestSize = currSize;
         }
     }
     if (bestIndex == -1) {
@@ -99,6 +101,8 @@ void allocBest(char name[MAXCMDS], int size) {
 
 void allocWorst(char name[MAXCMDS], int size) {
     int currStart = 0;
+    int currSize = 0;
+    int holeCurrSize = 0;
     int largestStart = -1;
     int largestSize = -1;
     bool inHole = false;
@@ -112,21 +116,21 @@ void allocWorst(char name[MAXCMDS], int size) {
         // found the end of empty space
         else if (inHole && mem[i] != EMPTY) {
             inHole = false;
-            int currentSize = i - currStart;
-            if (currentSize >= size && currentSize > largestSize) {
+            holeCurrSize = i - currStart;
+            if (holeCurrSize >= size && holeCurrSize > largestSize) {
                 // found an empty space large enough
                 largestStart = currStart;
-                largestSize = currentSize;
+                largestSize = holeCurrSize;
             }
         }
     }
 
     // ensuring that the last portion of memory is valid space
     if (inHole && (MEMSIZE - currStart) >= size) {
-        int currentSize = MEMSIZE - currStart;
-        if (currentSize > largestSize) {
+        currSize = MEMSIZE - currStart;
+        if (currSize > largestSize) {
             largestStart = currStart;
-            largestSize = currentSize;
+            largestSize = currSize;
         }
     }
 
@@ -206,7 +210,7 @@ void readFile(const char* fileName) {
         if (line[strlen(line) - 1] == '\n') {
             line[strlen(line) - 1] = 0;
         }
-        printf("%s\n", line);
+        printf("cmd> %s\n", line);
         if (line[0] == 'A') {
             char* string = strtok(line, " ");
             char name[MAXCMDS];
@@ -252,12 +256,14 @@ void readFile(const char* fileName) {
 
 // main function that continues to run until 'E' is inputted in either console or file
 int main() {
+    // initalize all the memory to empty space
     for (int a = 0; a < MEMSIZE; a++) {
         mem[a] = '.';
     }
+    // main loop
     while (running) {
         fflush(stdout);
-        printf("cmd>");
+        printf("cmd> ");
 
         char input[MAXCMDS + 1];
         if (fgets(input, MAXCMDS + 1, stdin) == NULL) {
