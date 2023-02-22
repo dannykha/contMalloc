@@ -1,3 +1,4 @@
+Testing with given input file:
 cmd> R test.txt
 cmd> A A 10 F
 cmd> A X 10 F
@@ -16,4 +17,70 @@ cmd> A H 1 W
 cmd> S
 AAAAAAAAAA..........BBBBBBBBBBFFFFFFFFFFFFFFFGGG..CCCCCH..............DDDDD.....
 cmd> C
+cmd> E
+
+
+First Fit Test:
+cmd> A A 10 F
+cmd> A X 10 F
+cmd> A B 10 F
+cmd> A X 20 F
+cmd> A C 5 F
+cmd> A X 15 F
+cmd> A D 5 F
+cmd> S
+AAAAAAAAAAXXXXXXXXXXBBBBBBBBBBXXXXXXXXXXXXXXXXXXXXCCCCCXXXXXXXXXXXXXXXDDDDD.....
+cmd> F X
+cmd> S
+AAAAAAAAAA..........BBBBBBBBBB....................CCCCC...............DDDDD.....
+cmd> C
+cmd> S
+AAAAAAAAAABBBBBBBBBBCCCCCDDDDD..................................................
+
+
+Best Fit Test: 
+cmd> A  A  10  F
+cmd> A  X  10  F
+cmd> A  B  10  F
+cmd> A  X  20  F
+cmd> A  C   5  F
+cmd> A  X  15  F
+cmd> A  D   5  F
+cmd> F  X
+cmd> S
+AAAAAAAAAA..........BBBBBBBBBB....................CCCCC...............DDDDD.....
+cmd> A  E   4  B
+cmd> A  E   4  B
+cmd> A  F  10  B
+cmd> A  G   5  B
+cmd> S
+AAAAAAAAAAEEEE......BBBBBBBBBB....................CCCCCFFFFFFFFFFGGGGGDDDDDEEEE.
+cmd> C
+cmd> S
+AAAAAAAAAAEEEEBBBBBBBBBBCCCCCFFFFFFFFFFGGGGGDDDDDEEEE...........................
+cmd> E
+
+
+Worst Fit Test:
+cmd> A  A  10  F
+cmd> A  X  10  F
+cmd> A  B  10  F
+cmd> A  X  20  F
+cmd> A  C   5  F
+cmd> A  X  15  F
+cmd> A  D   5  F
+cmd> S
+AAAAAAAAAAXXXXXXXXXXBBBBBBBBBBXXXXXXXXXXXXXXXXXXXXCCCCCXXXXXXXXXXXXXXXDDDDD.....
+cmd> F  X
+cmd> S
+AAAAAAAAAA..........BBBBBBBBBB....................CCCCC...............DDDDD.....
+cmd> A  E   4  W
+cmd> A  E   4  W
+cmd> A  F  10  W
+cmd> A  G   5  W
+cmd> S
+AAAAAAAAAA..........BBBBBBBBBBEEEEEEEEGGGGG.......CCCCCFFFFFFFFFF.....DDDDD.....
+cmd> C
+cmd> S
+AAAAAAAAAABBBBBBBBBBEEEEEEEEGGGGGCCCCCFFFFFFFFFFDDDDD...........................
 cmd> E
